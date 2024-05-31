@@ -4,10 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "install:all": "npm install && cd ./client && npm install",
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "cd ./client && npm run dev",
-    "build": "cd ./client && npm run build",
+    "build": "cd ./client && npm install && npm run build",
     "dev": "concurrently \"nodemon script.js --ignore 'client/*'\" \"npm run client\""
   },
   "keywords": [],
