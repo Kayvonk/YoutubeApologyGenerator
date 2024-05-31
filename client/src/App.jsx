@@ -9,9 +9,6 @@ function App() {
   const [apology, setApology] = useState("");
   const [buttonDisabled, setButtonDisabled] = useState(false);
 
-
-
-
   function handleInputChange(e) {
     const { value } = e.target;
     setQuestion(value);
@@ -19,15 +16,21 @@ function App() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    setButtonDisabled(true)
+    setButtonDisabled(true);
     console.log(question);
     // .post("http://localhost:3001/ask", { question: question })
     axios
-      .post("https://youtubeapologygenerator.onrender.com/ask", { question: question })
+      .post("https://youtubeapologygenerator.onrender.com/ask", {
+        question: question,
+      })
       .then((res) => {
-        setInstructions(res.data.result.instructions);
-        setApology(res.data.result.apology);
-        setButtonDisabled(false)
+        res.data.result.instructions
+          ? setInstructions(res.data.result.instructions)
+          : setInstructions("You did what?!");
+        res.data.result.apology
+          ? setApology(res.data.result.apology)
+          : setApology("Sorry, I don't know what to say...");
+        setButtonDisabled(false);
         console.log(res);
       });
   }
@@ -44,7 +47,9 @@ function App() {
             value={question}
             type="text"
           ></input>
-          <button disabled={buttonDisabled} type="submit">Submit</button>
+          <button disabled={buttonDisabled} type="submit">
+            Submit
+          </button>
           <section id="output">
             <h4>Instructions:</h4>
             <div id="code">{instructions}</div>
