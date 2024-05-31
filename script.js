@@ -56,7 +56,7 @@ const promptFunc = async (input) => {
   }
 };
 
-app.post('https://youtubeapologygenerator.onrender.com/ask', async (req, res) => {
+app.post('/ask', async (req, res) => {
   try {
     const userQuestion = req.body.question;
 
@@ -82,3 +82,6 @@ app.get('/', function (req, res) {
 app.listen(port, () => {
   console.log(`Server is running on port:${port}`);
 });
+
+// "origin": "https://youtubeapologygenerator.onrender.com/"
+// "origin": "http://localhost:3001/"
