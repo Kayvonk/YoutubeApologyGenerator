@@ -22,7 +22,7 @@ function App() {
       ? axios
           .post("http://localhost:3001/ask", { question: question })
           .then((res) => {
-            console.log(res.data);
+            console.log("dev", res.data);
             res.data?.result?.instructions
               ? setInstructions(res.data.result.instructions)
               : setInstructions("You did what?!");
@@ -37,7 +37,7 @@ function App() {
             question: question,
           })
           .then((res) => {
-            console.log(res.data);
+            console.log("prod", res.data);
             res.data?.result?.instructions
               ? setInstructions(res.data.result.instructions)
               : setInstructions("You did what?!");
