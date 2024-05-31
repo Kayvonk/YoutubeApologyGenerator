@@ -18,22 +18,35 @@ function App() {
     e.preventDefault();
     setButtonDisabled(true);
     console.log(question);
-    // .post("http://localhost:3001/ask", { question: question })
-    axios
-      .post("https://youtubeapologygenerator.onrender.com/ask", {
-        question: question,
-      })
-      .then((res) => {
-        console.log(res.data);
-        res.data.result.instructions
-          ? setInstructions(res.data.result.instructions)
-          : setInstructions("You did what?!");
-        res.data.result.apology
-          ? setApology(res.data.result.apology)
-          : setApology("Sorry, I don't know what to say...");
-        setButtonDisabled(false);
-        console.log(res);
-      });
+    import.meta.env.VITE_NODE_ENV === "development"
+      ? axios
+          .post("http://localhost:3001/ask", { question: question })
+          .then((res) => {
+            console.log(res.data);
+            res.data?.result?.instructions
+              ? setInstructions(res.data.result.instructions)
+              : setInstructions("You did what?!");
+            res.data?.result?.apology
+              ? setApology(res.data.result.apology)
+              : setApology("Sorry, I don't know what to say...");
+            setButtonDisabled(false);
+            console.log(res);
+          })
+      : axios
+          .post("https://youtubeapologygenerator.onrender.com/ask", {
+            question: question,
+          })
+          .then((res) => {
+            console.log(res.data);
+            res.data?.result?.instructions
+              ? setInstructions(res.data.result.instructions)
+              : setInstructions("You did what?!");
+            res.data?.result?.apology
+              ? setApology(res.data.result.apology)
+              : setApology("Sorry, I don't know what to say...");
+            setButtonDisabled(false);
+            console.log(res);
+          });
   }
 
   return (
