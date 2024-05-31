@@ -21,8 +21,9 @@ function App() {
     e.preventDefault();
     setButtonDisabled(true)
     console.log(question);
+    // .post("http://localhost:3001/ask", { question: question })
     axios
-      .post("http://localhost:3001/ask", { question: question })
+      .post("https://youtubeapologygenerator.onrender.com/ask", { question: question })
       .then((res) => {
         setInstructions(res.data.result.instructions);
         setApology(res.data.result.apology);
