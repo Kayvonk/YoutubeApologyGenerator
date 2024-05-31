@@ -20,7 +20,7 @@ function App() {
     console.log(question);
     import.meta.env.VITE_NODE_ENV === "development"
       ? axios
-          .post("http://localhost:3001/ask", { question: question })
+          .post("http://localhost:3001/api/ask", { question: question })
           .then((res) => {
             console.log("dev", res.data);
             res.data?.result?.instructions
@@ -33,7 +33,7 @@ function App() {
             console.log(res);
           })
       : axios
-          .post("https://youtubeapologygenerator.onrender.com/ask", {
+          .post("https://youtubeapologygenerator.onrender.com/api/ask", {
             question: question,
           })
           .then((res) => {

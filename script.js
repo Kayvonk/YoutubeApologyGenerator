@@ -56,7 +56,7 @@ const promptFunc = async (input) => {
   }
 };
 
-app.post('/ask', async (req, res) => {
+app.post('/api/ask', async (req, res) => {
   try {
     const userQuestion = req.body.question;
 
