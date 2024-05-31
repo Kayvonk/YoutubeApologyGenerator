@@ -4,13 +4,13 @@ const { StructuredOutputParser } = require("langchain/output_parsers");
 
 require('dotenv').config();
 const express = require('express');
+const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require("cors");
 
 const app = express();
 const port = 3001;
 
-// Middleware to parse JSON requests
 app.use(bodyParser.json());
 app.use(cors());
 app.options("*", cors());
@@ -28,7 +28,6 @@ const parser = StructuredOutputParser.fromNamesAndDescriptions({
 
 const formatInstructions = parser.getFormatInstructions();
 
-// Instantiation of a new object called "prompt" using the "PromptTemplate" class
 const prompt = new PromptTemplate({
   template: "The user will provide an disgraceful act that they have committed. You are knowledgeable about how to provide an apology that will make them look good to the public. Make sure to address why the act provided by the user was wrong. The length of the apology should be 20 sentences long or longer. \n{format_instructions}\n{question}",
   inputVariables: ["question"],
@@ -38,16 +37,12 @@ const prompt = new PromptTemplate({
 
 const promptFunc = async (input) => {
   try {
-    // Format the prompt with the user input
     const promptInput = await prompt.format({
       question: input
     });
 
-    // Call the model with the formatted prompt
     const res = await model.invoke(promptInput);
     
-    // For a non-coding question, the model returns an error message, causing parse() to throw an exception.
-    // In this case, simply return the error message instead of the parsed results.
     try { 
       const parsedResult = await parser.parse(res);
       return parsedResult;
@@ -61,7 +56,6 @@ const promptFunc = async (input) => {
   }
 };
 
-// Endpoint to handle request
 app.post('/ask', async (req, res) => {
   try {
     const userQuestion = req.body.question;
@@ -79,7 +73,12 @@ app.post('/ask', async (req, res) => {
   }
 });
 
-// Start the server
+app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('/', function (req, res) {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
+
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
