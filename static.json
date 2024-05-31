@@ -1,7 +1,7 @@
 {
   "proxies": {
     "/api/": {
-      "origin": "http://localhost:3001/"
+      "origin": "https://youtubeapologygenerator.onrender.com/"
     }
   }
 }
