@@ -56,7 +56,7 @@ const promptFunc = async (input) => {
   }
 };
 
-app.post('/ask', async (req, res) => {
+app.post('https://youtubeapologygenerator.onrender.com/ask', async (req, res) => {
   try {
     const userQuestion = req.body.question;
 
