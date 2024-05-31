@@ -24,6 +24,7 @@ function App() {
         question: question,
       })
       .then((res) => {
+        console.log(res.data);
         res.data.result.instructions
           ? setInstructions(res.data.result.instructions)
           : setInstructions("You did what?!");
